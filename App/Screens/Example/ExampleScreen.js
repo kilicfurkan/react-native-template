@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { PropTypes } from 'prop-types'
 import ExampleActions from 'App/Stores/Example/Actions'
 import { liveInEurope } from 'App/Stores/Example/Selectors'
-import Style from './ExampleScreenStyle'
+import styles from './styles'
 import { ApplicationStyles, Helpers, Images, Metrics } from 'App/Theme'
 
 /**
@@ -38,20 +38,20 @@ class ExampleScreen extends React.Component {
           <ActivityIndicator size="large" color="#0000ff" />
         ) : (
           <View>
-            <View style={Style.logoContainer}>
+            <View style={styles.logoContainer}>
               <Image style={Helpers.fullSize} source={Images.logo} resizeMode={'contain'} />
             </View>
-            <Text style={Style.text}>To get started, edit App.js</Text>
-            <Text style={Style.instructions}>{instructions}</Text>
+            <Text style={styles.text}>To get started, edit App.js</Text>
+            <Text style={styles.instructions}>{instructions}</Text>
             {this.props.userErrorMessage ? (
-              <Text style={Style.error}>{this.props.userErrorMessage}</Text>
+              <Text style={styles.error}>{this.props.userErrorMessage}</Text>
             ) : (
               <View>
-                <Text style={Style.result}>
+                <Text style={styles.result}>
                   {"I'm a fake user, my name is "}
                   {this.props.user.name}
                 </Text>
-                <Text style={Style.result}>
+                <Text style={styles.result}>
                   {this.props.liveInEurope ? 'I live in Europe !' : "I don't live in Europe."}
                 </Text>
               </View>
@@ -87,9 +87,9 @@ const mapStateToProps = (state) => ({
   liveInEurope: liveInEurope(state),
 })
 
-const mapDispatchToProps = (dispatch) => ({
-  fetchUser: () => dispatch(ExampleActions.fetchUser()),
-})
+const mapDispatchToProps = {
+  fetchUser: ExampleActions.fetchUser,
+}
 
 export default connect(
   mapStateToProps,

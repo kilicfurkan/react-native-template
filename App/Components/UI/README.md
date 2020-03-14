@@ -1,0 +1,1 @@
+Composite componentler containerlarin icinde yer alan, kendi icinde bi logi barindiran componenet seklidir.
