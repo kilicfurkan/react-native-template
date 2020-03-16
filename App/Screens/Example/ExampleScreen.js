@@ -1,11 +1,6 @@
 import React from 'react'
-import { Platform, Text, View, Button, ActivityIndicator, Image } from 'react-native'
-import { connect } from 'react-redux'
-import { PropTypes } from 'prop-types'
-import ExampleActions from 'App/Stores/Example/Actions'
-import { liveInEurope } from 'App/Stores/Example/Selectors'
-import styles from './styles'
-import { ApplicationStyles, Helpers, Images, Metrics } from 'App/Theme'
+import { Platform, Text, SafeAreaView, Button, ActivityIndicator, Image } from 'react-native'
+import Header from '../../Components/UI/Header'
 
 /**
  * This is an example of a container component.
@@ -20,78 +15,39 @@ const instructions = Platform.select({
 })
 
 class ExampleScreen extends React.Component {
-  componentDidMount() {
-    this._fetchUser()
+  constructor(props){
+    super(props)
+    this.state = {
+      isPressedProfile: false,
+      backgroundColor: 'green'
+    }
   }
 
+  onPressLeftIcon = () => {
+    this.setState({ isPressedProfile: !this.state.isPressedProfile })
+  }
+  
+  onPressRightIcon = () => {
+    this.setState({ backgroundColor: 'purple' })
+  }
+  
   render() {
+    const { backgroundColor } = this.state
+
     return (
-      <View
-        style={[
-          Helpers.fill,
-          Helpers.rowMain,
-          Metrics.mediumHorizontalMargin,
-          Metrics.mediumVerticalMargin,
-        ]}
-      >
-        {this.props.userIsLoading ? (
-          <ActivityIndicator size="large" color="#0000ff" />
-        ) : (
-          <View>
-            <View style={styles.logoContainer}>
-              <Image style={Helpers.fullSize} source={Images.logo} resizeMode={'contain'} />
-            </View>
-            <Text style={styles.text}>To get started, edit App.js</Text>
-            <Text style={styles.instructions}>{instructions}</Text>
-            {this.props.userErrorMessage ? (
-              <Text style={styles.error}>{this.props.userErrorMessage}</Text>
-            ) : (
-              <View>
-                <Text style={styles.result}>
-                  {"I'm a fake user, my name is "}
-                  {this.props.user.name}
-                </Text>
-                <Text style={styles.result}>
-                  {this.props.liveInEurope ? 'I live in Europe !' : "I don't live in Europe."}
-                </Text>
-              </View>
-            )}
-            <Button
-              style={ApplicationStyles.button}
-              onPress={() => this._fetchUser()}
-              title="Refresh"
-            />
-          </View>
-        )}
-      </View>
+      <SafeAreaView style={{ flex: 1, backgroundColor }}>
+        <Header
+          style={{  }}
+          title="Deneme"
+          leftIcon="Profil"
+          rightIcon="Ayarlar"
+          onPressLeftIcon={() => [this.onPressLeftIcon(), this.onPressRightIcon()]}
+          onPressRightIcon={() => this.onPressRightIcon()}
+        />
+        {this.state.isPressedProfile ? <Text>Profil</Text> : null}
+      </SafeAreaView>
     )
   }
-
-  _fetchUser() {
-    this.props.fetchUser()
-  }
 }
 
-ExampleScreen.propTypes = {
-  user: PropTypes.object,
-  userIsLoading: PropTypes.bool,
-  userErrorMessage: PropTypes.string,
-  fetchUser: PropTypes.func,
-  liveInEurope: PropTypes.bool,
-}
-
-const mapStateToProps = (state) => ({
-  user: state.example.user,
-  userIsLoading: state.example.userIsLoading,
-  userErrorMessage: state.example.userErrorMessage,
-  liveInEurope: liveInEurope(state),
-})
-
-const mapDispatchToProps = {
-  fetchUser: ExampleActions.fetchUser,
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ExampleScreen)
+export default ExampleScreen
