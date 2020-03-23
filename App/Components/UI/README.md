@@ -1,1 +1,1 @@
-Composite componentler containerlarin icinde yer alan, kendi icinde bi logi barindiran componenet seklidir.
+UI componentler containerlarin icinde yer alan, kendi icinde bi logic barindirmayan componenet seklidir.
