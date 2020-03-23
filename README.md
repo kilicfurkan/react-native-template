@@ -1,6 +1,4 @@
-## Running the project
 
-Assuming you have all the requirements installed, you can setup and run the project by running:
 
 - `yarn install` to install the dependencies
 - run the following steps for your platform
